@@ -1,9 +1,11 @@
 const express = require('express');
+const hbs     = require('hbs');
 const app     = express();
 const port    = 8080;
 
-// indicar a express que usaremos hbs
+// Handlebars - partials
 app.set('view-engine', 'hbs');
+hbs.registerPartials(__dirname + '/views/partials');
 
 // middleware para servir contenido estatico
 app.use(express.static('public'));
@@ -18,12 +20,18 @@ app.get('/', (req, res) => {
 });
 
 app.get('/generic', (req, res) => {
-    res.sendFile(__dirname + '/public/generic.html')
-});
+    res.render('generic.hbs', {
+        title: 'Generic page',
+        name: 'By Luis Nieves'
+    })
+})
 
 app.get('/elements', (req, res) => {
-    res.sendFile(__dirname + '/public/elements.html')
-});
+    res.render('elements.hbs', {
+        title: 'Elements page',
+        name: 'Our elements by Luis'
+    })
+})
 
 
 app.get('*', (req, res) => {
